@@ -34,7 +34,7 @@ cc_library(
         ],
     }),
     defines = select({
-        "@platforms//os:windows": [ "WIN32", "LIBXML_STATIC", "POCO_STATIC", "POCO_NO_AUTOMATIC_LIBS" ],
+        "@platforms//os:windows": [ "WIN32", "LIBXML_STATIC", "POCO_STATIC", "POCO_NO_AUTOMATIC_LIBS", "PCRE2_STATIC" ],
         "//conditions:default": [],
     }),
 )
