@@ -20,13 +20,19 @@ cc_library(
         "//conditions:default": [],
     }),
     visibility = ["//visibility:public"],
-    deps = [
-        "//others:mbedtls",
-        "//others:libinjection",
-        "@libxml2_conan//:libxml2_headers",
-        "@libpcre2_conan//:libpcre2_headers",
-        "@poco_conan//:poco_headers",
-    ],
+    deps = select({
+        "@platforms//os:windows": [
+            "//others:mbedtls",
+            "//others:libinjection",
+            "@libxml2_conan//:libxml2_headers",
+            "@libpcre2_conan//:libpcre2_headers",
+            "@poco_conan//:poco_headers",
+        ],
+        "//conditions:default": [
+            "//others:mbedtls",
+            "//others:libinjection",
+        ],
+    }),
     defines = select({
         "@platforms//os:windows": [ "WIN32", "LIBXML_STATIC" ],
         "//conditions:default": [],
