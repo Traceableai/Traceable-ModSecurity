@@ -1,0 +1,40 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+
+cc_library(
+    name = "modsecurity",
+    srcs = glob(
+        [
+            "src/**/*.h",
+            "src/**/*.hh",
+            "src/**/*.cc",
+        ],
+    ),
+    hdrs = glob([
+        "headers/**/*.h",
+    ]),
+    includes = ["headers", "others"],
+    strip_include_prefix = "headers",
+    linkopts = select({
+        "@platforms//os:linux": ["-lpthread"],
+        "@platforms//os:macos": ["-lpthread"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@platforms//os:windows": [
+            "//others:mbedtls",
+            "//others:libinjection",
+            "@libxml2_conan//:libxml2_headers",
+            "@libpcre2_conan//:libpcre2_headers",
+            "@poco_conan//:poco_headers",
+        ],
+        "//conditions:default": [
+            "//others:mbedtls",
+            "//others:libinjection",
+        ],
+    }),
+    defines = select({
+        "@platforms//os:windows": [ "WIN32", "LIBXML_STATIC", "POCO_STATIC", "POCO_NO_AUTOMATIC_LIBS", "PCRE2_STATIC" ],
+        "//conditions:default": [],
+    }),
+)

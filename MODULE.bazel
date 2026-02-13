@@ -1,0 +1,48 @@
+module (
+  name = "modsecurity",
+  compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.14")
+bazel_dep(name = "platforms", version = "1.0.0")
+
+new_local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
+
+new_local_repository(
+    name = "libxml2_conan",
+    path = "C:/Conan/direct_deploy/libxml2",
+    build_file_content = """
+cc_library(
+    name = "libxml2_headers",
+    hdrs = glob(["include/libxml2/**/*.h"]),
+    strip_include_prefix = "include/libxml2",
+    visibility = ["//visibility:public"],
+)
+""",
+)
+
+new_local_repository(
+    name = "libpcre2_conan",
+    path = "C:/Conan/direct_deploy/pcre2",
+    build_file_content = """
+cc_library(
+    name = "libpcre2_headers",
+    hdrs = glob(["include/**/*.h"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+)
+""",
+)
+
+new_local_repository(
+    name = "poco_conan",
+    path = "C:/Conan/direct_deploy/poco",
+    build_file_content = """
+cc_library(
+    name = "poco_headers",
+    hdrs = glob(["include/**/*.h"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+)
+""",
+)

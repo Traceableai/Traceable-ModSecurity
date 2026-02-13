@@ -1,0 +1,19 @@
+cc_binary (
+    name = "main",
+    srcs = ["main.cc"],
+    deps = ["//:modsecurity", "@rules_cc//cc/runfiles"],
+    data = ["basic_rules.conf"],
+    linkopts = select({
+        "@platforms//os:windows": [
+            "/LIBPATH:C:/Conan/Libs",
+            "Ws2_32.lib",
+            "Iphlpapi.lib",
+            "pcre2-8-static.lib",
+            "PocoFoundationmd.lib",
+            "libxml2_a.lib",          
+        ],
+        "//conditions:default": [
+            "-l:libpcre2-8.a",
+        ],
+    }),
+)
