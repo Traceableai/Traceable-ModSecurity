@@ -23,5 +23,12 @@ cc_library(
     deps = [
         "//others:mbedtls",
         "//others:libinjection",
+        "@libxml2_conan//:libxml2_headers",
+        "@libpcre2_conan//:libpcre2_headers",
+        "@poco_conan//:poco_headers",
     ],
+    defines = select({
+        "@platforms//os:windows": [ "WIN32", "LIBXML_STATIC" ],
+        "//conditions:default": [],
+    }),
 )

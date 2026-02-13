@@ -24,7 +24,7 @@ bool RemoveWhitespace::transform(std::string &value, const Transaction *trans) c
     const char nonBreakingSpaces = 0xa0;
     const char nonBreakingSpaces2 = 0xc2;
 
-    auto pred = [](const auto c) {
+    auto pred = [nonBreakingSpaces, nonBreakingSpaces2](const auto c) {
         // remove whitespaces and non breaking spaces (NBSP)
         return std::isspace(static_cast<unsigned char>(c))
             || c == nonBreakingSpaces

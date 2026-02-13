@@ -23,6 +23,9 @@ cc_library(
             "libinjection/src/**/*.h",
             "libinjection/src/**/*.c",
         ],
+        exclude = [
+            "libinjection/src/fuzz/**",
+        ],
     ),
     hdrs = glob([
         "libinjection/src/**/*.h",
